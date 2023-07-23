@@ -30,8 +30,6 @@ class Item:
         self.__name = name_
         if len(self.__name) > 10:
             self.__name = self.__name[:10]
-        # else:
-        #     self.__name = self.__name
 
     def calculate_total_price(self) -> float:
         """
@@ -51,7 +49,6 @@ class Item:
     def instantiate_from_csv(cls, path):
         Item.all = []
         with open(path, 'r') as csvfile:
-            # fieldnames = ['name', 'price', 'quantity']
             reader = csv.DictReader(csvfile)
             for row in reader:
                 cls(row['name'], float(row['price']), int(row['quantity']))
