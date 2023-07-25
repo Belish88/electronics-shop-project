@@ -62,6 +62,3 @@ class Item:
     @staticmethod
     def string_to_number(str_):
         return int(float(str_))
-
-# item1 = Item("Смартфон", 10000, 20)
-# print(repr(item1))
