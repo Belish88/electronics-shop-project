@@ -9,6 +9,16 @@ def test_init():
     assert item1.quantity == 20
 
 
+def test_repr():
+    item1 = Item("Смартфон", 10000, 20)
+    assert repr(item1) == "Item('Смартфон', 10000, 20)"
+
+
+def test_str():
+    item1 = Item("Смартфон", 10000, 20)
+    assert str(item1) == 'Смартфон'
+
+
 def test_calculate_total_price():
     item1 = Item("Смартфон", 10000, 20)
     assert item1.calculate_total_price() == 200000
