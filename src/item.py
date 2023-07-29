@@ -8,7 +8,7 @@ class Item:
     pay_rate = 1.0
     all = []
 
-    def __init__(self, name: str, price: float, quantity: int) -> None:
+    def __init__(self, name, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
 
@@ -54,8 +54,8 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, path):
         Item.all = []
-        with open(path, 'r') as csvfile:
-            reader = csv.DictReader(csvfile)
+        with open(path, 'r', encoding="utf-8") as csvfile:
+            reader: csv.DictReader = csv.DictReader(csvfile)
             for row in reader:
                 cls(row['name'], float(row['price']), int(row['quantity']))
 
