@@ -1,8 +1,8 @@
 import pytest
 
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
-from src.setting import CSV
+from src.setting import CSV, NOTFILE, CSVTEST
 
 
 def test_init():
@@ -46,6 +46,12 @@ def test_apply_discount():
 def test_instantiate_from_csv():
     Item.instantiate_from_csv(CSV)
     assert len(Item.all) == 5
+
+
+def test_instantiate_from_csv_test():
+    assert Item.instantiate_from_csv_test(CSV) is True
+    assert Item.instantiate_from_csv_test(NOTFILE) == 'Отсутствует файл item.csv'
+    assert Item.instantiate_from_csv_test(CSVTEST) == 'Файл items.csv поврежден'
 
 
 def test_name():
