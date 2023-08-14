@@ -57,14 +57,47 @@ class Item:
         """
         self.price *= self.pay_rate
 
-    @classmethod
-    def instantiate_from_csv(cls, path):
-        Item.all = []
-        with open(path, 'r', encoding="utf-8") as csvfile:
-            reader: csv.DictReader = csv.DictReader(csvfile)
-            for row in reader:
-                cls(row['name'], float(row['price']), int(row['quantity']))
-
     @staticmethod
     def string_to_number(str_):
         return int(float(str_))
+
+    @classmethod
+    def instantiate_from_csv(cls, path):
+        """
+        Преобразует файл csv  в словарь.
+        """
+        if Item.instantiate_from_csv_test(path) is True:
+            Item.all = []
+            with open(path, 'r', encoding="utf-8") as csvfile:
+                reader: csv.DictReader = csv.DictReader(csvfile)
+                for row in reader:
+                    cls(row['name'], float(row['price']), int(row['quantity']))
+
+    @staticmethod
+    def instantiate_from_csv_test(path):
+        """
+        Проверка наличия и целостности файла
+        """
+        try:
+            with open(path, 'r', encoding="utf-8") as csvfile:
+                reader: csv.DictReader = csv.DictReader(csvfile)
+                reader_dict = list(reader)
+                for i in reader_dict:
+                    if (i.get('name') and i.get('price') and i.get('quantity')) in ['', None]:
+                        raise InstantiateCSVError
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+            return 'Отсутствует файл item.csv'
+        except InstantiateCSVError as ex:
+            print(ex.message)
+            return ex.message
+        else:
+            return True
+
+
+class InstantiateCSVError(Exception):
+    """
+    Исключение при пофрежденном файле
+    """
+    def __init__(self):
+        self.message = 'Файл items.csv поврежден'
